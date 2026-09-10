@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     item_podcast.xml
-    Sleek modern card for displaying a podcast item with squircle album artwork,
-    crisp high-contrast typography, network info, and dynamic mood match badge.
+    Magazine / Vinyl EP style podcast card with artwork drop container,
+    resonance meter badge, show tags, and clear typography.
 -->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,26 +10,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="6dp"
-    app:cardBackgroundColor="@color/surface_card"
-    app:cardCornerRadius="16dp"
+    android:layout_marginVertical="7dp"
+    app:cardBackgroundColor="@color/canvas_surface"
+    app:cardCornerRadius="18dp"
     app:cardElevation="0dp"
-    app:strokeWidth="1dp"
-    app:strokeColor="@color/surface_card_stroke">
+    app:strokeWidth="1.5dp"
+    app:strokeColor="@color/canvas_border">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="14dp">
 
-        <!-- Podcast Artwork Thumbnail Card (Rounded Squircle) -->
+        <!-- Album Artwork Sleeve -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardArtwork"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/canvas_border"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -43,7 +44,7 @@
                 tools:src="@tools:sample/avatars" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Podcast Title / Collection Name -->
+        <!-- Podcast Title -->
         <TextView
             android:id="@+id/textViewPodcastTitle"
             android:layout_width="0dp"
@@ -52,15 +53,15 @@
             android:layout_marginEnd="8dp"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@color/text_high_emphasis"
+            android:textColor="@color/text_headline"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/cardArtwork"
             app:layout_constraintEnd_toStartOf="@id/textViewMoodScore"
             app:layout_constraintTop_toTopOf="@id/cardArtwork"
-            tools:text="Huberman Lab Science &amp; Health" />
+            tools:text="Huberman Lab: Neuroscience &amp; Sleep" />
 
-        <!-- Artist / Creator Name with Podcast Tag -->
+        <!-- Creator Name / Network -->
         <TextView
             android:id="@+id/textViewArtistName"
             android:layout_width="0dp"
@@ -68,8 +69,8 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="8dp"
-            android:textSize="13sp"
-            android:textColor="@color/text_medium_emphasis"
+            android:textSize="12.5sp"
+            android:textColor="@color/text_muted"
             android:maxLines="1"
             android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/cardArtwork"
@@ -77,34 +78,34 @@
             app:layout_constraintTop_toBottomOf="@id/textViewPodcastTitle"
             tools:text="Scicomm Media • Dr. Andrew Huberman" />
 
-        <!-- Category & Audio indicator -->
+        <!-- Bottom Tag -->
         <TextView
             android:id="@+id/textViewTag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="4dp"
-            android:text="🎙️ Podcast Show"
+            android:text="🎧 iTunes Collection"
             android:textSize="11sp"
-            android:textColor="@color/text_low_emphasis"
+            android:textColor="@color/text_dim"
             app:layout_constraintStart_toEndOf="@id/cardArtwork"
             app:layout_constraintTop_toBottomOf="@id/textViewArtistName"
             app:layout_constraintBottom_toBottomOf="@id/cardArtwork" />
 
-        <!-- Dynamic Mood Match Score Badge -->
+        <!-- Vibe Resonance Score Badge -->
         <TextView
             android:id="@+id/textViewMoodScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
-            android:background="@drawable/bg_mood_badge"
-            android:textColor="@color/badge_green_text"
+            android:background="@drawable/bg_match_badge"
+            android:textColor="@color/mint_green"
             android:textSize="11sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="🔥 96% Vibe" />
+            tools:text="96% Vibe" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

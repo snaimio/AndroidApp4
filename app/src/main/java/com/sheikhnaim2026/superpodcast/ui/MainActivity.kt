@@ -5,6 +5,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -16,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.sheikhnaim2026.superpodcast.R
 import com.sheikhnaim2026.superpodcast.data.ITunesApi
@@ -34,10 +36,12 @@ class MainActivity : AppCompatActivity() {
     // UI View variables
     private lateinit var editTextSearch: EditText
     private lateinit var buttonSearch: Button
+    private lateinit var btnDice: MaterialButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var textViewStatus: TextView
     private lateinit var layoutEmptyState: LinearLayout
+    private lateinit var imageVinyl: ImageView
     private lateinit var textViewEmptyTitle: TextView
     private lateinit var textViewEmptySubtitle: TextView
     private lateinit var adapter: PodcastAdapter
@@ -60,10 +64,12 @@ class MainActivity : AppCompatActivity() {
         // Connect UI elements from activity_main.xml
         editTextSearch = findViewById(R.id.editTextSearch)
         buttonSearch = findViewById(R.id.buttonSearch)
+        btnDice = findViewById(R.id.btnDice)
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.progressBar)
         textViewStatus = findViewById(R.id.textViewStatus)
         layoutEmptyState = findViewById(R.id.layoutEmptyState)
+        imageVinyl = findViewById(R.id.imageVinyl)
         textViewEmptyTitle = findViewById(R.id.textViewEmptyTitle)
         textViewEmptySubtitle = findViewById(R.id.textViewEmptySubtitle)
 
@@ -82,6 +88,15 @@ class MainActivity : AppCompatActivity() {
         // Search button click listener
         buttonSearch.setOnClickListener {
             performSearchFromInput()
+        }
+
+        // Surprise Dice click listener (picks a random mood vibe)
+        btnDice.setOnClickListener {
+            val randomMood = MoodCatalog.getRandomMood()
+            editTextSearch.setText(randomMood.label)
+            // Playful vinyl rotation feedback
+            imageVinyl.animate().rotationBy(360f).setDuration(500).start()
+            searchPodcastsByMood(randomMood)
         }
 
         // Trigger search when pressing Enter on software keyboard
@@ -105,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             val mood = MoodCatalog.findByLabelOrId(query) ?: MoodCatalog.fromFreeText(query)
             searchPodcastsByMood(mood)
         } else {
-            Toast.makeText(this, "Enter a vibe or pick a chip above", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Enter a vibe or roll the dice 🎲", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -136,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         layoutEmptyState.visibility = View.GONE
         recyclerView.alpha = 0.2f
         textViewStatus.visibility = View.VISIBLE
-        textViewStatus.text = "CURATING PODCASTS FOR: ${mood.label.uppercase()}"
+        textViewStatus.text = "TUNING IN: ${mood.label.uppercase()}..."
 
         lifecycleScope.launch {
             try {
@@ -157,14 +172,14 @@ class MainActivity : AppCompatActivity() {
                 // Step 3: Update adapter with results
                 if (rankedPodcasts.isNotEmpty()) {
                     layoutEmptyState.visibility = View.GONE
-                    textViewStatus.text = "✨ ${rankedPodcasts.size} PODCASTS RANKED FOR ${mood.label.uppercase()}"
+                    textViewStatus.text = "● ${rankedPodcasts.size} SHOWS TUNED TO ${mood.label.uppercase()}"
                     adapter.updateList(rankedPodcasts)
                 } else {
                     // Show empty state if no podcasts were found
                     textViewStatus.visibility = View.GONE
                     layoutEmptyState.visibility = View.VISIBLE
-                    textViewEmptyTitle.text = getString(R.string.empty_title_not_found)
-                    textViewEmptySubtitle.text = "No podcasts matched '${mood.label}'.\nTry searching for another vibe."
+                    textViewEmptyTitle.text = "No frequency found"
+                    textViewEmptySubtitle.text = "No podcasts matched '${mood.label}'.\nTry rolling the dice 🎲 or picking another vibe."
                     adapter.updateList(emptyList())
                 }
 
@@ -174,8 +189,8 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.alpha = 1.0f
                 textViewStatus.visibility = View.GONE
                 layoutEmptyState.visibility = View.VISIBLE
-                textViewEmptyTitle.text = getString(R.string.empty_title_error)
-                textViewEmptySubtitle.text = getString(R.string.empty_subtitle_error)
+                textViewEmptyTitle.text = "Signal Lost"
+                textViewEmptySubtitle.text = "Unable to connect to iTunes.\nPlease check your network connection."
                 e.printStackTrace()
                 Toast.makeText(this@MainActivity, "Network error. Please try again.", Toast.LENGTH_LONG).show()
             }

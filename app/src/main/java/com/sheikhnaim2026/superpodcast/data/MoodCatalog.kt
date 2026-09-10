@@ -1,39 +1,39 @@
 package com.sheikhnaim2026.superpodcast.data
 
-// List of preset moods and helper functions for finding or creating moods
+// Curated list of distinct moods with semantic search keywords
 object MoodCatalog {
 
     // Predefined mood categories with related keywords for scoring
     val predefinedMoods: List<Mood> = listOf(
         Mood(
             id = "cozy",
-            label = "☕ Cozy Rain",
+            label = "☕ Rainy Loft",
             seedTerm = "relaxing",
-            keywords = listOf("cozy", "calm", "sleep", "rain", "quiet", "gentle", "soft", "peaceful", "bedtime", "ambient")
+            keywords = listOf("cozy", "calm", "sleep", "rain", "quiet", "gentle", "soft", "peaceful", "bedtime", "ambient", "loft")
         ),
         Mood(
             id = "gym",
-            label = "🔥 Beast Mode",
+            label = "🔥 High Octane",
             seedTerm = "fitness",
-            keywords = listOf("intense", "power", "strength", "energy", "hardcore", "burn", "workout", "hustle", "beast", "training")
+            keywords = listOf("intense", "power", "strength", "energy", "hardcore", "burn", "workout", "hustle", "beast", "training", "drive")
         ),
         Mood(
             id = "crime",
-            label = "🕵️ Midnight Mystery",
+            label = "🕵️ True Noir 2AM",
             seedTerm = "true crime",
-            keywords = listOf("crime", "murder", "mystery", "dark", "unsolved", "case", "investigation", "secret", "killer", "suspense")
+            keywords = listOf("crime", "murder", "mystery", "dark", "unsolved", "case", "investigation", "secret", "killer", "suspense", "noir")
         ),
         Mood(
             id = "focus",
-            label = "💡 Deep Focus",
+            label = "🧠 Mind Lab",
             seedTerm = "productivity",
-            keywords = listOf("focus", "study", "mindset", "code", "tech", "science", "philosophy", "lofi", "deep work", "learning")
+            keywords = listOf("focus", "study", "mindset", "code", "tech", "science", "philosophy", "lofi", "deep work", "learning", "brain")
         ),
         Mood(
             id = "comedy",
-            label = "😂 Stand-Up & Laughs",
+            label = "🍿 Pop & Banter",
             seedTerm = "comedy",
-            keywords = listOf("funny", "laugh", "humor", "silly", "joke", "hilarious", "standup", "banter", "improv", "satire")
+            keywords = listOf("funny", "laugh", "humor", "silly", "joke", "hilarious", "standup", "banter", "improv", "satire", "pop")
         )
     )
 
@@ -56,6 +56,11 @@ object MoodCatalog {
         }
 
         return null
+    }
+
+    // Returns a random mood from the catalog for the surprise dice roll
+    fun getRandomMood(): Mood {
+        return predefinedMoods.random()
     }
 
     // Create a dynamic mood if the user types custom search text

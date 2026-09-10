@@ -58,16 +58,16 @@ class PodcastAdapter(
             // Change badge text and color based on match score
             val score = scoredItem.matchPercentage
             val (badgeText, bgColor, textColor) = when {
-                score >= 80 -> Triple("🔥 $score% Vibe", Color.parseColor("#132E27"), Color.parseColor("#34D399")) // Green
-                score >= 60 -> Triple("⚡ $score% Vibe", Color.parseColor("#332514"), Color.parseColor("#FBBF24")) // Amber
-                else -> Triple("✨ $score% Vibe", Color.parseColor("#1E1E38"), Color.parseColor("#818CF8"))        // Purple/Indigo
+                score >= 80 -> Triple("● $score% Vibe", Color.parseColor("#142921"), Color.parseColor("#00F5A0")) // Electric Mint
+                score >= 60 -> Triple("● $score% Vibe", Color.parseColor("#2E2214"), Color.parseColor("#FFD166")) // Golden Ochre
+                else -> Triple("● $score% Vibe", Color.parseColor("#26192E"), Color.parseColor("#FF6B6B"))        // Neon Peach
             }
 
             textMoodScore.text = badgeText
             ViewCompat.setBackgroundTintList(textMoodScore, ColorStateList.valueOf(bgColor))
             textMoodScore.setTextColor(textColor)
 
-            // Load artwork image from URL using Glide
+            // Load artwork image from URL using Glide with smooth placeholder
             Glide.with(itemView.context)
                 .load(podcast.artworkUrl100)
                 .placeholder(android.R.drawable.ic_menu_gallery)

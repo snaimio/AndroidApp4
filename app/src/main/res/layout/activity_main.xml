@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     activity_main.xml
-    Main screen layout for SuperPodcast app.
-    Features search bar, preset mood chips, status text, and RecyclerView results.
+    Creative Retro-Modern Audio UI for SuperPodcast.
+    Features an editorial masthead, surprise-vibe dice action,
+    glowing search capsule, tactile vibe chips, and magazine-style podcast cards.
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,16 +12,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_dark"
+    android:background="@color/canvas_dark"
     android:paddingHorizontal="16dp"
     android:paddingTop="12dp">
 
-    <!-- Header Section -->
-    <LinearLayout
+    <!-- Top Editorial Header & Branding -->
+    <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -28,42 +28,87 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/btnDice">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SUPER"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.04"
+                    android:textColor="@color/text_headline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="PODCAST"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.04"
+                    android:textColor="@color/neon_peach" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"
+                    android:background="@drawable/bg_hero_tag"
+                    android:text="EDITION 2026"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/electric_cyan" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/header_super"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_high_emphasis" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/header_podcast"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="@color/accent_primary" />
+                android:layout_marginTop="2dp"
+                android:text="Sonic mood radar • Tune into your headspace"
+                android:textSize="12sp"
+                android:textColor="@color/text_muted" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="@string/header_subtitle"
-            android:textSize="13sp"
-            android:textColor="@color/text_medium_emphasis" />
-    </LinearLayout>
+        <!-- Surprise Dice Button (Rolls random vibe) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDice"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:padding="0dp"
+            app:cornerRadius="22dp"
+            app:icon="@drawable/ic_dice"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/text_headline"
+            app:backgroundTint="@color/canvas_surface_elevated"
+            app:strokeColor="@color/canvas_border"
+            app:strokeWidth="1dp"
+            android:contentDescription="Roll surprise mood" />
+    </RelativeLayout>
 
-    <!-- Floating Pill Search Bar -->
+    <!-- Search Capsule with integrated icon and Find button -->
     <LinearLayout
         android:id="@+id/searchContainer"
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginTop="14dp"
-        android:background="@drawable/bg_search_bar"
+        android:background="@drawable/bg_gradient_search"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
@@ -72,9 +117,10 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/ic_search"
+            app:tint="@color/text_muted"
             android:contentDescription="Search Icon" />
 
         <EditText
@@ -85,9 +131,9 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="@string/search_hint"
-            android:textColorHint="@color/text_low_emphasis"
-            android:textColor="@color/text_high_emphasis"
+            android:hint="Type any vibe (chill, late night, focus)..."
+            android:textColorHint="@color/text_dim"
+            android:textColor="@color/text_headline"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLines="1"
@@ -100,14 +146,15 @@
             android:insetTop="0dp"
             android:insetBottom="0dp"
             app:cornerRadius="19dp"
-            app:backgroundTint="@color/accent_primary"
-            android:text="@string/btn_find"
+            app:backgroundTint="@color/neon_peach"
+            android:text="Tune In"
             android:textAllCaps="false"
+            android:textColor="@color/text_headline"
             android:textSize="13sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Horizontal Mood Preset Chips -->
+    <!-- Horizontal Tactile Mood Carousel -->
     <HorizontalScrollView
         android:id="@+id/scrollMoodChips"
         android:layout_width="0dp"
@@ -129,139 +176,141 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:chipBackgroundColor="@color/chip_bg_unselected"
-                app:chipStrokeColor="@color/chip_stroke_unselected"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="16dp"
-                android:textColor="@color/chip_text_unselected"
-                android:text="☕ Cozy Rain" />
+                app:chipBackgroundColor="@color/canvas_surface"
+                app:chipStrokeColor="@color/canvas_border"
+                app:chipStrokeWidth="1.5dp"
+                app:chipCornerRadius="14dp"
+                android:textColor="@color/text_body"
+                android:text="☕ Rainy Loft" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipGym"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:chipBackgroundColor="@color/chip_bg_unselected"
-                app:chipStrokeColor="@color/chip_stroke_unselected"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="16dp"
-                android:textColor="@color/chip_text_unselected"
-                android:text="🔥 Beast Mode" />
+                app:chipBackgroundColor="@color/canvas_surface"
+                app:chipStrokeColor="@color/canvas_border"
+                app:chipStrokeWidth="1.5dp"
+                app:chipCornerRadius="14dp"
+                android:textColor="@color/text_body"
+                android:text="🔥 High Octane" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCrime"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:chipBackgroundColor="@color/chip_bg_unselected"
-                app:chipStrokeColor="@color/chip_stroke_unselected"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="16dp"
-                android:textColor="@color/chip_text_unselected"
-                android:text="🕵️ Midnight Mystery" />
+                app:chipBackgroundColor="@color/canvas_surface"
+                app:chipStrokeColor="@color/canvas_border"
+                app:chipStrokeWidth="1.5dp"
+                app:chipCornerRadius="14dp"
+                android:textColor="@color/text_body"
+                android:text="🕵️ True Noir 2AM" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipFocus"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:chipBackgroundColor="@color/chip_bg_unselected"
-                app:chipStrokeColor="@color/chip_stroke_unselected"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="16dp"
-                android:textColor="@color/chip_text_unselected"
-                android:text="💡 Deep Focus" />
+                app:chipBackgroundColor="@color/canvas_surface"
+                app:chipStrokeColor="@color/canvas_border"
+                app:chipStrokeWidth="1.5dp"
+                app:chipCornerRadius="14dp"
+                android:textColor="@color/text_body"
+                android:text="🧠 Mind Lab" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipComedy"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:chipBackgroundColor="@color/chip_bg_unselected"
-                app:chipStrokeColor="@color/chip_stroke_unselected"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="16dp"
-                android:textColor="@color/chip_text_unselected"
-                android:text="😂 Stand-Up &amp; Laughs" />
+                app:chipBackgroundColor="@color/canvas_surface"
+                app:chipStrokeColor="@color/canvas_border"
+                app:chipStrokeWidth="1.5dp"
+                app:chipCornerRadius="14dp"
+                android:textColor="@color/text_body"
+                android:text="🍿 Pop &amp; Banter" />
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
-    <!-- Status Subtitle Badge -->
+    <!-- Dynamic Status / Result Indicator Pill -->
     <TextView
         android:id="@+id/textViewStatus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textStyle="bold"
-        android:textColor="@color/text_medium_emphasis"
+        android:letterSpacing="0.06"
+        android:textColor="@color/mint_green"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/scrollMoodChips"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="✨ 25 PODCASTS RANKED FOR COZY"
+        tools:text="● 25 PODCASTS TUNED TO RAINY LOFT"
         tools:visibility="visible" />
 
-    <!-- Empty State Container -->
+    <!-- Vinyl Record Empty State Illustration -->
     <LinearLayout
         android:id="@+id/layoutEmptyState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="28dp"
         app:layout_constraintTop_toBottomOf="@id/textViewStatus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:src="@drawable/ic_headphones"
-            android:alpha="0.85"
-            android:contentDescription="Empty state icon" />
+            android:id="@+id/imageVinyl"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:src="@drawable/ic_vinyl"
+            android:contentDescription="Vinyl record graphic" />
 
         <TextView
             android:id="@+id/textViewEmptyTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/empty_title_default"
-            android:textSize="18sp"
+            android:layout_marginTop="18dp"
+            android:text="Turn the dial"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/text_high_emphasis" />
+            android:textColor="@color/text_headline" />
 
         <TextView
             android:id="@+id/textViewEmptySubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="@string/empty_subtitle_default"
+            android:text="Pick a mood chip above, roll the dice 🎲,\nor type any vibe to discover matching shows."
             android:textSize="13sp"
-            android:textColor="@color/text_medium_emphasis" />
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/text_muted" />
     </LinearLayout>
 
-    <!-- Loading Spinner Indicator -->
+    <!-- Modern Loading Progress Bar -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/accent_primary"
+        android:indeterminateTint="@color/neon_peach"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/textViewStatus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- RecyclerView for Displaying Scored Podcasts -->
+    <!-- Podcasts RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:clipToPadding="false"
         android:paddingBottom="24dp"
         app:layout_constraintTop_toBottomOf="@id/textViewStatus"
