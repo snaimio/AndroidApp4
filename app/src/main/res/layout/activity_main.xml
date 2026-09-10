@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_main.xml
+    Main screen layout for SuperPodcast app.
+    Features search bar, preset mood chips, status text, and RecyclerView results.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="12dp">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_super"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_high_emphasis" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_podcast"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/accent_primary" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/header_subtitle"
+            android:textSize="13sp"
+            android:textColor="@color/text_medium_emphasis" />
+    </LinearLayout>
+
+    <!-- Floating Pill Search Bar -->
+    <LinearLayout
+        android:id="@+id/searchContainer"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_search_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_search"
+            android:contentDescription="Search Icon" />
+
+        <EditText
+            android:id="@+id/editTextSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/search_hint"
+            android:textColorHint="@color/text_low_emphasis"
+            android:textColor="@color/text_high_emphasis"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="19dp"
+            app:backgroundTint="@color/accent_primary"
+            android:text="@string/btn_find"
+            android:textAllCaps="false"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Horizontal Mood Preset Chips -->
+    <HorizontalScrollView
+        android:id="@+id/scrollMoodChips"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/searchContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupMoods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCozy"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_bg_unselected"
+                app:chipStrokeColor="@color/chip_stroke_unselected"
+                app:chipStrokeWidth="1dp"
+                app:chipCornerRadius="16dp"
+                android:textColor="@color/chip_text_unselected"
+                android:text="☕ Cozy Rain" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGym"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_bg_unselected"
+                app:chipStrokeColor="@color/chip_stroke_unselected"
+                app:chipStrokeWidth="1dp"
+                app:chipCornerRadius="16dp"
+                android:textColor="@color/chip_text_unselected"
+                android:text="🔥 Beast Mode" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCrime"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_bg_unselected"
+                app:chipStrokeColor="@color/chip_stroke_unselected"
+                app:chipStrokeWidth="1dp"
+                app:chipCornerRadius="16dp"
+                android:textColor="@color/chip_text_unselected"
+                android:text="🕵️ Midnight Mystery" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFocus"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_bg_unselected"
+                app:chipStrokeColor="@color/chip_stroke_unselected"
+                app:chipStrokeWidth="1dp"
+                app:chipCornerRadius="16dp"
+                android:textColor="@color/chip_text_unselected"
+                android:text="💡 Deep Focus" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipComedy"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_bg_unselected"
+                app:chipStrokeColor="@color/chip_stroke_unselected"
+                app:chipStrokeWidth="1dp"
+                app:chipCornerRadius="16dp"
+                android:textColor="@color/chip_text_unselected"
+                android:text="😂 Stand-Up &amp; Laughs" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <!-- Status Subtitle Badge -->
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_medium_emphasis"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/scrollMoodChips"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="✨ 25 PODCASTS RANKED FOR COZY"
+        tools:visibility="visible" />
+
+    <!-- Empty State Container -->
+    <LinearLayout
+        android:id="@+id/layoutEmptyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_headphones"
+            android:alpha="0.85"
+            android:contentDescription="Empty state icon" />
+
+        <TextView
+            android:id="@+id/textViewEmptyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/empty_title_default"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_high_emphasis" />
+
+        <TextView
+            android:id="@+id/textViewEmptySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="@string/empty_subtitle_default"
+            android:textSize="13sp"
+            android:textColor="@color/text_medium_emphasis" />
+    </LinearLayout>
+
+    <!-- Loading Spinner Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/accent_primary"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- RecyclerView for Displaying Scored Podcasts -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_podcast" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

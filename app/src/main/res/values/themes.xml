@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- App Theme for SuperPodcast -->
+    <style name="Base.Theme.SuperPodcast" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorPrimaryVariant">@color/accent_primary_variant</item>
+        <item name="colorOnPrimary">@color/text_high_emphasis</item>
+        <item name="colorSecondary">@color/accent_neon_green</item>
+        <item name="colorOnSecondary">@color/bg_dark</item>
+        
+        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:navigationBarColor">@color/bg_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Theme.SuperPodcast" parent="Base.Theme.SuperPodcast" />
+</resources>

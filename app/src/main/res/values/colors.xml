@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Modern Dark / Slate Spotify-grade Palette -->
+    <color name="bg_dark">#0F1117</color>
+    <color name="surface_dark">#181B24</color>
+    <color name="surface_card">#202430</color>
+    <color name="surface_card_stroke">#2D3342</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_primary">#6366F1</color> <!-- Electric Indigo -->
+    <color name="accent_primary_variant">#4F46E5</color>
+    <color name="accent_neon_green">#10B981</color> <!-- Emerald Green -->
+    <color name="accent_amber">#F59E0B</color>
+    <color name="accent_rose">#F43F5E</color>
+    <color name="accent_cyan">#06B6D4</color>
+
+    <!-- Text Hierarchy -->
+    <color name="text_high_emphasis">#F8FAFC</color>
+    <color name="text_medium_emphasis">#94A3B8</color>
+    <color name="text_low_emphasis">#64748B</color>
+
+    <!-- Chips & Badges -->
+    <color name="chip_bg_unselected">#1E222D</color>
+    <color name="chip_stroke_unselected">#333A4D</color>
+    <color name="chip_text_unselected">#CBD5E1</color>
+
+    <color name="badge_green_bg">#132E27</color>
+    <color name="badge_green_text">#34D399</color>
+    <color name="badge_amber_bg">#332514</color>
+    <color name="badge_amber_text">#FBBF24</color>
+    <color name="badge_indigo_bg">#1E1E38</color>
+    <color name="badge_indigo_text">#818CF8</color>
+</resources>

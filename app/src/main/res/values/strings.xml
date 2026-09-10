@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SuperPodcast</string>
+    <string name="header_super">Super</string>
+    <string name="header_podcast">Podcast</string>
+    <string name="header_subtitle">Search and discover podcasts by mood and vibes</string>
+    <string name="search_hint">Search vibe (e.g. cozy, deep focus, gym)...</string>
+    <string name="btn_find">Find</string>
+    <string name="empty_title_default">Choose your vibe</string>
+    <string name="empty_subtitle_default">Tap a mood chip above or type any feeling\nto discover matching iTunes podcasts.</string>
+    <string name="empty_title_not_found">No matches found</string>
+    <string name="empty_title_error">Connection Error</string>
+    <string name="empty_subtitle_error">Unable to reach iTunes catalog.\nPlease check your internet connection.</string>
+</resources>
