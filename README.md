@@ -23,7 +23,7 @@ An Android podcast discovery application built with Kotlin, Retrofit, Coroutines
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/username/AndroidApp4.git
+   git clone https://github.com/snaimio/AndroidApp4.git
    ```
 2. Open the project in **Android Studio**.
 3. Allow Gradle to sync dependencies.
