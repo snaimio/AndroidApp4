@@ -30,10 +30,12 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-// Main activity for SuperPodcast app
+// MainActivity: The main screen of SuperPodcast.
+// Handles user interactions (search bar, mood chips, dice shuffle), triggers asynchronous API
+// network requests using Kotlin Coroutines, and updates the RecyclerView with scored results.
 class MainActivity : AppCompatActivity() {
 
-    // UI View variables
+    // UI View References
     private lateinit var editTextSearch: EditText
     private lateinit var buttonSearch: Button
     private lateinit var btnDice: MaterialButton
@@ -46,22 +48,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textViewEmptySubtitle: TextView
     private lateinit var adapter: PodcastAdapter
 
-    // Retrofit API instance
+    // Retrofit API Service instance
     private lateinit var api: ITunesApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Enable edge-to-edge rendering for modern full-screen display
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Handle edge-to-edge system insets (status bar / navigation bar padding)
+        // Apply system window insets so content is not obscured by the status bar or navigation bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Connect UI elements from activity_main.xml
+        // Initialize UI components from XML layout
         editTextSearch = findViewById(R.id.editTextSearch)
         buttonSearch = findViewById(R.id.buttonSearch)
         btnDice = findViewById(R.id.btnDice)
@@ -73,33 +76,33 @@ class MainActivity : AppCompatActivity() {
         textViewEmptyTitle = findViewById(R.id.textViewEmptyTitle)
         textViewEmptySubtitle = findViewById(R.id.textViewEmptySubtitle)
 
-        // Setup RecyclerView with LinearLayoutManager and empty adapter
+        // Configure RecyclerView with vertical layout manager and an initially empty adapter
         adapter = PodcastAdapter(emptyList())
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        // Setup Retrofit with iTunes base URL and Gson converter
+        // Build Retrofit client targeting the iTunes Search API base URL with Gson JSON parser
         val retrofit = Retrofit.Builder()
             .baseUrl("https://itunes.apple.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         api = retrofit.create(ITunesApi::class.java)
 
-        // Search button click listener
+        // Set click listener for the search button
         buttonSearch.setOnClickListener {
             performSearchFromInput()
         }
 
-        // Surprise Dice click listener (picks a random mood vibe)
+        // Set click listener for the Surprise Dice button:
+        // Picks a random mood from MoodCatalog, triggers a 360-degree vinyl spin animation, and searches
         btnDice.setOnClickListener {
             val randomMood = MoodCatalog.getRandomMood()
             editTextSearch.setText(randomMood.label)
-            // Playful vinyl rotation feedback
             imageVinyl.animate().rotationBy(360f).setDuration(500).start()
             searchPodcastsByMood(randomMood)
         }
 
-        // Trigger search when pressing Enter on software keyboard
+        // Handle the software keyboard "Search" action key on IME enter
         editTextSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 performSearchFromInput()
@@ -109,14 +112,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Setup click listeners for preset mood chips
+        // Set up click listeners on all predefined mood preset chips
         setupMoodChips()
     }
 
-    // Reads search input and triggers podcast search
+    // Reads the search query from the EditText and resolves it to a preset or free-text Mood
     private fun performSearchFromInput() {
         val query = editTextSearch.text.toString().trim()
         if (query.isNotEmpty()) {
+            // Find existing preset mood or dynamically synthesize one from custom text
             val mood = MoodCatalog.findByLabelOrId(query) ?: MoodCatalog.fromFreeText(query)
             searchPodcastsByMood(mood)
         } else {
@@ -124,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Set click listener on each preset chip
+    // Configures listeners for the horizontal mood chips
     private fun setupMoodChips() {
         bindChip(R.id.chipCozy, "cozy")
         bindChip(R.id.chipGym, "gym")
@@ -133,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         bindChip(R.id.chipComedy, "comedy")
     }
 
-    // Helper function to link a chip view with a mood id
+    // Helper to connect a Chip view to a specific Mood ID from MoodCatalog
     private fun bindChip(chipId: Int, moodId: String) {
         findViewById<Chip>(chipId)?.setOnClickListener {
             val mood = MoodCatalog.findByLabelOrId(moodId)
@@ -144,38 +148,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Searches iTunes API and scores results using Coroutines
+    // Executes the complete search, score, and UI update pipeline using Coroutines
     private fun searchPodcastsByMood(mood: Mood) {
-        // Show progress bar and update status text
+        // Show loading progress spinner, hide empty state, and dim list slightly
         progressBar.visibility = View.VISIBLE
         layoutEmptyState.visibility = View.GONE
         recyclerView.alpha = 0.2f
         textViewStatus.visibility = View.VISIBLE
         textViewStatus.text = "TUNING IN: ${mood.label.uppercase()}..."
 
+        // Launch coroutine on lifecycleScope to automatically cancel if Activity is destroyed
         lifecycleScope.launch {
             try {
-                // Step 1: Call iTunes API on background IO thread
+                // Step 1: Query iTunes API on the IO Dispatcher (background thread for networking)
                 val response = withContext(Dispatchers.IO) {
                     api.searchPodcasts(term = mood.seedTerm)
                 }
 
-                // Step 2: Score and rank podcasts on background Default thread
+                // Step 2: Calculate mood match percentage on the Default Dispatcher (CPU-bound scoring)
                 val rankedPodcasts = withContext(Dispatchers.Default) {
                     MoodScorer.rank(response.results, mood)
                 }
 
-                // Restore UI back to normal
+                // Restore UI controls on the Main thread
                 progressBar.visibility = View.GONE
                 recyclerView.alpha = 1.0f
 
-                // Step 3: Update adapter with results
+                // Step 3: Handle results and update adapter
                 if (rankedPodcasts.isNotEmpty()) {
                     layoutEmptyState.visibility = View.GONE
                     textViewStatus.text = "● ${rankedPodcasts.size} SHOWS TUNED TO ${mood.label.uppercase()}"
                     adapter.updateList(rankedPodcasts)
                 } else {
-                    // Show empty state if no podcasts were found
+                    // Show empty state if no podcasts matched the query
                     textViewStatus.visibility = View.GONE
                     layoutEmptyState.visibility = View.VISIBLE
                     textViewEmptyTitle.text = "No frequency found"
@@ -184,7 +189,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             } catch (e: Exception) {
-                // Catch network errors and show a toast
+                // Catch any network timeouts, DNS failures, or parsing errors gracefully
                 progressBar.visibility = View.GONE
                 recyclerView.alpha = 1.0f
                 textViewStatus.visibility = View.GONE
