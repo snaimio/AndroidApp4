@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Internet permission needed to search iTunes API and load podcast artwork -->
+    <!-- Internet permission needed to search iTunes API, fetch RSS feeds, stream media, and load artwork -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Notification permission for posting episode update alerts on Android 13+ (API 33+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SuperPodcast">
-        
+
+        <!-- Main Launcher Screen: Mood discovery and search -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -23,6 +27,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Podcast Detail Screen: Shows description, subscribe button, ExoPlayer, and episodes list -->
+        <activity
+            android:name=".ui.PodcastDetailActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Subscriptions Screen: Lists all subscribed podcasts saved in Room database -->
+        <activity
+            android:name=".ui.SubscriptionsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>
