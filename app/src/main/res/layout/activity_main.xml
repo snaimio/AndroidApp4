@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     activity_main.xml
-    Creative Retro-Modern Audio UI for SuperPodcast.
-    Features an editorial masthead, surprise-vibe dice action,
-    glowing search capsule, tactile vibe chips, and magazine-style podcast cards.
+    Main discovery screen for SuperPodcast.
+    Includes top brand masthead, Subscriptions and Surprise Dice buttons,
+    search capsule, mood chips, empty state, and podcast list.
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/btnDice">
+            android:layout_toStartOf="@id/headerActionButtons">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SUPER"
+                    android:text="@string/header_super"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.04"
@@ -51,55 +51,72 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="PODCAST"
+                    android:text="@string/header_podcast"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.04"
                     android:textColor="@color/neon_peach" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:background="@drawable/bg_hero_tag"
-                    android:text="EDITION 2026"
-                    android:textSize="9sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/electric_cyan" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Sonic mood radar • Tune into your headspace"
+                android:text="@string/header_subtitle"
                 android:textSize="12sp"
                 android:textColor="@color/text_muted" />
         </LinearLayout>
 
-        <!-- Surprise Dice Button (Rolls random vibe) -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnDice"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+        <!-- Action Buttons Container (Subscriptions + Dice Roll) -->
+        <LinearLayout
+            android:id="@+id/headerActionButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:insetLeft="0dp"
-            android:insetRight="0dp"
-            android:padding="0dp"
-            app:cornerRadius="22dp"
-            app:icon="@drawable/ic_dice"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="@color/text_headline"
-            app:backgroundTint="@color/canvas_surface_elevated"
-            app:strokeColor="@color/canvas_border"
-            app:strokeWidth="1dp"
-            android:contentDescription="Roll surprise mood" />
+            android:orientation="horizontal">
+
+            <!-- Subscriptions Library Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubscriptions"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="8dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:padding="0dp"
+                app:cornerRadius="22dp"
+                app:icon="@drawable/ic_bookmark"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/electric_cyan"
+                app:backgroundTint="@color/canvas_surface_elevated"
+                app:strokeColor="@color/canvas_border"
+                app:strokeWidth="1dp"
+                android:contentDescription="Open Subscriptions" />
+
+            <!-- Surprise Dice Button (Rolls random vibe) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDice"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:padding="0dp"
+                app:cornerRadius="22dp"
+                app:icon="@drawable/ic_dice"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/text_headline"
+                app:backgroundTint="@color/canvas_surface_elevated"
+                app:strokeColor="@color/canvas_border"
+                app:strokeWidth="1dp"
+                android:contentDescription="Roll surprise mood" />
+        </LinearLayout>
     </RelativeLayout>
 
     <!-- Search Capsule with integrated icon and Find button -->
@@ -131,7 +148,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="Type any vibe (chill, late night, focus)..."
+            android:hint="@string/search_hint"
             android:textColorHint="@color/text_dim"
             android:textColor="@color/text_headline"
             android:imeOptions="actionSearch"
@@ -147,7 +164,7 @@
             android:insetBottom="0dp"
             app:cornerRadius="19dp"
             app:backgroundTint="@color/neon_peach"
-            android:text="Tune In"
+            android:text="@string/btn_find"
             android:textAllCaps="false"
             android:textColor="@color/text_headline"
             android:textSize="13sp"
@@ -234,7 +251,7 @@
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
-    <!-- Dynamic Status / Result Indicator Pill -->
+    <!-- Dynamic Status Indicator Pill -->
     <TextView
         android:id="@+id/textViewStatus"
         android:layout_width="0dp"
@@ -276,7 +293,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="Turn the dial"
+            android:text="@string/empty_title_default"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/text_headline" />
@@ -287,13 +304,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Pick a mood chip above, roll the dice 🎲,\nor type any vibe to discover matching shows."
+            android:text="@string/empty_subtitle_default"
             android:textSize="13sp"
             android:lineSpacingExtra="3dp"
             android:textColor="@color/text_muted" />
     </LinearLayout>
 
-    <!-- Modern Loading Progress Bar -->
+    <!-- Loading Spinner Indicator -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
