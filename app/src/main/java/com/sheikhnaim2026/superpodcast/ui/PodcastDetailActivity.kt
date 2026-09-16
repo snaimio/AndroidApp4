@@ -10,7 +10,10 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
@@ -75,13 +78,24 @@ class PodcastDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_podcast_detail)
+
+        // Handle edge-to-edge system insets (status bar & navigation bar padding)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootDetail)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         // Set up MaterialToolbar with back navigation
         val toolbar: MaterialToolbar = findViewById(R.id.toolbarDetail)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         // Wire top My Subscriptions navigation button
         val btnSubscriptions: MaterialButton = findViewById(R.id.btnSubscriptions)
