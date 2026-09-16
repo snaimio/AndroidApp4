@@ -86,7 +86,7 @@
             android:paddingHorizontal="7dp"
             android:paddingVertical="2dp"
             android:background="@drawable/bg_match_badge"
-            android:text="★ Subscribed"
+            android:text="@string/badge_subscribed"
             android:textColor="@color/mint_green"
             android:textSize="10sp"
             android:textStyle="bold"

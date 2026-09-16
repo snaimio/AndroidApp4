@@ -54,12 +54,14 @@ class EpisodeAdapter(
             textTitle.text = episode.title
             textDate.text = episode.pubDate.ifBlank { "Recent Release" }
 
+            textType.text = itemView.context.getString(
+                if (episode.isVideo) R.string.type_video else R.string.type_audio
+            )
+
             if (episode.isVideo) {
-                textType.text = "VIDEO"
                 ViewCompat.setBackgroundTintList(textType, ColorStateList.valueOf(Color.parseColor("#2E1928")))
                 textType.setTextColor(Color.parseColor("#FF6B6B"))
             } else {
-                textType.text = "AUDIO"
                 ViewCompat.setBackgroundTintList(textType, ColorStateList.valueOf(Color.parseColor("#142921")))
                 textType.setTextColor(Color.parseColor("#00F5A0"))
             }

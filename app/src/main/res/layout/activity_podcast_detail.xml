@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/canvas_dark"
-        app:title="Podcast Details"
+        app:title="@string/toolbar_title_detail"
         app:titleTextColor="@color/text_headline"
         app:navigationIconTint="@color/text_headline">
 
@@ -96,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:contentDescription="Podcast Cover Art"
+                        android:contentDescription="@string/desc_podcast_artwork"
                         tools:src="@tools:sample/avatars" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -143,7 +143,7 @@
                     android:insetBottom="0dp"
                     app:cornerRadius="19dp"
                     app:backgroundTint="@color/neon_peach"
-                    android:text="SUBSCRIBE"
+                    android:text="@string/btn_subscribe"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_headline"
@@ -175,7 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="SHOW NOTES"
+            android:text="@string/header_show_notes"
             android:textSize="11sp"
             android:textStyle="bold"
             android:letterSpacing="0.08"
@@ -203,7 +203,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="AVAILABLE EPISODES"
+            android:text="@string/header_available_episodes"
             android:textSize="11sp"
             android:textStyle="bold"
             android:letterSpacing="0.08"

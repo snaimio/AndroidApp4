@@ -34,9 +34,26 @@
     <string name="desc_roll_dice">Roll surprise mood</string>
     <string name="desc_play_episode">Play Episode</string>
 
-    <!-- Notifications & Background Updates -->
-    <string name="notification_channel_name">Podcast Episode Updates</string>
-    <string name="notification_channel_desc">Notifications when subscribed podcasts publish new episodes</string>
-    <string name="msg_new_episode">New episode available!</string>
-    <string name="action_view">VIEW</string>
+    <!-- Detail Screen Toolbar -->
+    <string name="toolbar_title_detail">Podcast Details</string>
+    <string name="btn_unsubscribe">UNSUBSCRIBE</string>
+
+    <!-- Detail Screen Errors and Messages -->
+    <string name="error_no_feed_url">No RSS feed URL provided for this podcast.</string>
+    <string name="error_no_episodes">No episodes could be loaded from the feed.</string>
+    <string name="error_cannot_subscribe_no_feed">Cannot subscribe: missing feed URL</string>
+    <string name="msg_subscribed_to">Subscribed to %1$s</string>
+    <string name="msg_unsubscribed">Unsubscribed</string>
+
+    <!-- Detail Screen Content Descriptions -->
+    <string name="desc_podcast_artwork">Podcast Cover Art</string>
+    <string name="desc_no_subscriptions">No Subscriptions</string>
+
+    <!-- Main Activity Messages and Status -->
+    <string name="hint_enter_vibe">Enter a vibe or roll the dice 🎲</string>
+    <string name="status_tuning_in">TUNING IN: %1$s...</string>
+    <string name="status_shows_tuned">● %1$d SHOWS TUNED TO %2$s</string>
+    <string name="empty_subtitle_not_found">No podcasts matched \'%1$s\'.\nTry rolling the dice 🎲 or picking another vibe.</string>
+    <string name="error_network_try_again">Network error. Please try again.</string>
+    <string name="msg_new_episode_toast">✨ New episode in %1$s:\n%2$s</string>
 </resources>

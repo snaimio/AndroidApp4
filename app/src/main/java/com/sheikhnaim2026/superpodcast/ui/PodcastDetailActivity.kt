@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -83,9 +82,6 @@ class PodcastDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
 
         // Wire top My Subscriptions navigation button
         val btnSubscriptions: MaterialButton = findViewById(R.id.btnSubscriptions)
@@ -106,6 +102,9 @@ class PodcastDetailActivity : AppCompatActivity() {
         // Read intent extras passed from MainActivity or SubscriptionsActivity
         podcastTrackId = intent.getLongExtra(EXTRA_TRACK_ID, 0L)
         podcastTitle = intent.getStringExtra(EXTRA_TITLE) ?: "Podcast"
+        toolbar.title = podcastTitle
+        supportActionBar?.title = podcastTitle
+        invalidateOptionsMenu()
         podcastArtist = intent.getStringExtra(EXTRA_ARTIST) ?: "Unknown Artist"
         podcastArtwork = intent.getStringExtra(EXTRA_ARTWORK) ?: ""
         podcastFeedUrl = intent.getStringExtra(EXTRA_FEED_URL) ?: ""
@@ -144,7 +143,7 @@ class PodcastDetailActivity : AppCompatActivity() {
             loadFeed(podcastFeedUrl)
         } else {
             progressBarFeed.visibility = View.GONE
-            textViewDescription.text = "No RSS feed URL provided for this podcast."
+            textViewDescription.text = getString(R.string.error_no_feed_url)
         }
     }
 
@@ -166,11 +165,11 @@ class PodcastDetailActivity : AppCompatActivity() {
      */
     private fun updateSubscriptionButton() {
         if (isSubscribed) {
-            buttonSubscribe.text = "UNSUBSCRIBE"
+            buttonSubscribe.text = getString(R.string.btn_unsubscribe)
             buttonSubscribe.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#2C3040"))
             buttonSubscribe.setTextColor(Color.parseColor("#FF6B6B"))
         } else {
-            buttonSubscribe.text = "SUBSCRIBE"
+            buttonSubscribe.text = getString(R.string.btn_subscribe)
             buttonSubscribe.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF6B6B"))
             buttonSubscribe.setTextColor(Color.parseColor("#FFFFFF"))
         }
@@ -181,7 +180,7 @@ class PodcastDetailActivity : AppCompatActivity() {
      */
     private fun toggleSubscription() {
         if (!isSubscribed && podcastFeedUrl.isBlank()) {
-            Toast.makeText(this, "Cannot subscribe: missing feed URL", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_cannot_subscribe_no_feed), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -204,7 +203,7 @@ class PodcastDetailActivity : AppCompatActivity() {
 
             isSubscribed = !isSubscribed
             updateSubscriptionButton()
-            val msg = if (isSubscribed) "Subscribed to $podcastTitle" else "Unsubscribed"
+            val msg = if (isSubscribed) getString(R.string.msg_subscribed_to, podcastTitle) else getString(R.string.msg_unsubscribed)
             Toast.makeText(this@PodcastDetailActivity, msg, Toast.LENGTH_SHORT).show()
         }
     }
@@ -237,7 +236,7 @@ class PodcastDetailActivity : AppCompatActivity() {
                 // Show show-notes description of the newest episode
                 textViewDescription.text = cleanDescription(episodes.first().description)
             } else {
-                textViewDescription.text = "No episodes could be loaded from the feed."
+                textViewDescription.text = getString(R.string.error_no_episodes)
             }
         }
     }
@@ -279,14 +278,6 @@ class PodcastDetailActivity : AppCompatActivity() {
         } catch (e: Exception) {
             rawHtml.trim()
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

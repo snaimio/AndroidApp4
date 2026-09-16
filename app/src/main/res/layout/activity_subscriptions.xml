@@ -18,36 +18,23 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/canvas_dark"
-        app:title="My Subscriptions"
+        app:title="@string/header_my_subscriptions"
         app:titleTextColor="@color/text_headline"
         app:navigationIconTint="@color/text_headline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Subscriptions Section Subtitle -->
-    <TextView
-        android:id="@+id/textViewHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/header_my_subscriptions"
-        android:textSize="11sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.08"
-        android:textColor="@color/electric_cyan"
-        app:layout_constraintTop_toBottomOf="@id/toolbarSubscriptions"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <!-- Empty State Text View (Shown when no subscriptions exist in Room) -->
     <LinearLayout
         android:id="@+id/layoutEmptySubscriptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/textViewHeader"
+        app:layout_constraintTop_toBottomOf="@id/toolbarSubscriptions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,14 +45,14 @@
             android:layout_height="64dp"
             android:src="@drawable/ic_bookmark"
             app:tint="@color/text_dim"
-            android:contentDescription="No Subscriptions" />
+            android:contentDescription="@string/desc_no_subscriptions" />
 
         <TextView
             android:id="@+id/textViewNoSubscriptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="No subscriptions yet"
+            android:text="@string/empty_subscriptions_title"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/text_headline" />
@@ -75,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:gravity="center"
-            android:text="Search for podcasts and tap SUBSCRIBE\nto receive episode updates."
+            android:text="@string/empty_subscriptions_subtitle"
             android:textSize="13sp"
             android:textColor="@color/text_muted" />
     </LinearLayout>
@@ -85,10 +72,10 @@
         android:id="@+id/recyclerViewSubscriptions"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:clipToPadding="false"
         android:paddingBottom="24dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewHeader"
+        app:layout_constraintTop_toBottomOf="@id/toolbarSubscriptions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,7 +2,6 @@ package com.sheikhnaim2026.superpodcast.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -37,9 +36,6 @@ class SubscriptionsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
 
         recyclerView = findViewById(R.id.recyclerViewSubscriptions)
         layoutEmpty = findViewById(R.id.layoutEmptySubscriptions)
@@ -87,14 +83,6 @@ class SubscriptionsActivity : AppCompatActivity() {
             putExtra(PodcastDetailActivity.EXTRA_FEED_URL, podcast.feedUrl)
         }
         startActivity(intent)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

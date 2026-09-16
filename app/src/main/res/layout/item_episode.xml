@@ -29,7 +29,7 @@
             android:layout_height="32dp"
             android:src="@drawable/ic_play"
             app:tint="@color/neon_peach"
-            android:contentDescription="Play Episode"
+            android:contentDescription="@string/desc_play_episode"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

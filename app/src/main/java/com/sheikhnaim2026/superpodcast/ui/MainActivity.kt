@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             if (intent?.action == PodcastUpdateWorker.ACTION_NEW_EPISODE) {
                 val podcastTitle = intent.getStringExtra(PodcastUpdateWorker.EXTRA_PODCAST_TITLE) ?: "Podcast"
                 val episodeTitle = intent.getStringExtra(PodcastUpdateWorker.EXTRA_EPISODE_TITLE) ?: "New Episode"
-                Toast.makeText(this@MainActivity, "✨ New episode in $podcastTitle:\n$episodeTitle", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, getString(R.string.msg_new_episode_toast, podcastTitle, episodeTitle), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
             val mood = MoodCatalog.findByLabelOrId(query) ?: MoodCatalog.fromFreeText(query)
             searchPodcastsByMood(mood)
         } else {
-            Toast.makeText(this, "Enter a vibe or roll the dice 🎲", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.hint_enter_vibe), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -272,7 +272,7 @@ class MainActivity : AppCompatActivity() {
         layoutEmptyState.visibility = View.GONE
         recyclerView.alpha = 0.2f
         textViewStatus.visibility = View.VISIBLE
-        textViewStatus.text = "TUNING IN: ${mood.label.uppercase()}..."
+        textViewStatus.text = getString(R.string.status_tuning_in, mood.label.uppercase())
 
         searchJob = lifecycleScope.launch {
             try {
@@ -292,13 +292,13 @@ class MainActivity : AppCompatActivity() {
                 // Step 3: Populate list
                 if (rankedPodcasts.isNotEmpty()) {
                     layoutEmptyState.visibility = View.GONE
-                    textViewStatus.text = "● ${rankedPodcasts.size} SHOWS TUNED TO ${mood.label.uppercase()}"
+                    textViewStatus.text = getString(R.string.status_shows_tuned, rankedPodcasts.size, mood.label.uppercase())
                     adapter.updateList(rankedPodcasts)
                 } else {
                     textViewStatus.visibility = View.GONE
                     layoutEmptyState.visibility = View.VISIBLE
                     textViewEmptyTitle.text = getString(R.string.empty_title_not_found)
-                    textViewEmptySubtitle.text = "No podcasts matched '${mood.label}'.\nTry rolling the dice 🎲 or picking another vibe."
+                    textViewEmptySubtitle.text = getString(R.string.empty_subtitle_not_found, mood.label)
                     adapter.updateList(emptyList())
                 }
 
@@ -310,7 +310,7 @@ class MainActivity : AppCompatActivity() {
                 textViewEmptyTitle.text = getString(R.string.empty_title_error)
                 textViewEmptySubtitle.text = getString(R.string.empty_subtitle_error)
                 e.printStackTrace()
-                Toast.makeText(this@MainActivity, "Network error. Please try again.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, getString(R.string.error_network_try_again), Toast.LENGTH_LONG).show()
             }
         }
     }
