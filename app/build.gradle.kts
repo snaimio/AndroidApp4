@@ -48,6 +48,19 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel)
 
+    // Room Database
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    // WorkManager for background podcast updates
+    implementation(libs.work.runtime.ktx)
+
+    // Media3 ExoPlayer for audio/video/HLS playback
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.exoplayer.hls)
+    implementation(libs.media3.ui)
+
     // Retrofit and Gson for API networking
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
