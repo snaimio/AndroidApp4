@@ -27,6 +27,9 @@ class PodcastAdapter(
     private val onPodcastClick: (Podcast) -> Unit
 ) : RecyclerView.Adapter<PodcastAdapter.PodcastViewHolder>() {
 
+    /**
+     * Replaces the current dataset with [newItems] and refreshes the list.
+     */
     fun updateList(newItems: List<ScoredPodcast>) {
         this.items = newItems
         notifyDataSetChanged()

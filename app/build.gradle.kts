@@ -47,6 +47,7 @@ dependencies {
     // Lifecycle for coroutines and viewmodel
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel)
+    implementation(libs.kotlinx.coroutines.android)
 
     // Room Database
     implementation(libs.room.runtime)

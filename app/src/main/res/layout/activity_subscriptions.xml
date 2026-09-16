@@ -12,17 +12,31 @@
     android:background="@color/canvas_dark"
     android:padding="16dp">
 
-    <!-- Header Title -->
+    <!-- Top Action Bar / Toolbar with Back Navigation -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSubscriptions"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/canvas_dark"
+        app:title="My Subscriptions"
+        app:titleTextColor="@color/text_headline"
+        app:navigationIconTint="@color/text_headline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Subscriptions Section Subtitle -->
     <TextView
         android:id="@+id/textViewHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MY SUBSCRIPTIONS"
-        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:text="@string/header_my_subscriptions"
+        android:textSize="11sp"
         android:textStyle="bold"
         android:letterSpacing="0.08"
         android:textColor="@color/electric_cyan"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarSubscriptions"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Empty State Text View (Shown when no subscriptions exist in Room) -->

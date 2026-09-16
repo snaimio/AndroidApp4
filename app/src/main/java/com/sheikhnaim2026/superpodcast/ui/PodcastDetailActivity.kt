@@ -1,5 +1,6 @@
 package com.sheikhnaim2026.superpodcast.ui
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -76,9 +78,20 @@ class PodcastDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_podcast_detail)
 
-        // Enable top action bar back arrow
+        // Set up MaterialToolbar with back navigation
+        val toolbar: MaterialToolbar = findViewById(R.id.toolbarDetail)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Podcast Details"
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        // Wire top My Subscriptions navigation button
+        val btnSubscriptions: MaterialButton = findViewById(R.id.btnSubscriptions)
+        btnSubscriptions.setOnClickListener {
+            startActivity(Intent(this, SubscriptionsActivity::class.java))
+        }
 
         // Bind view references
         imageViewArtwork = findViewById(R.id.imageViewPodcastArtwork)
@@ -245,7 +258,7 @@ class PodcastDetailActivity : AppCompatActivity() {
                     .build()
             )
 
-        // Check if stream is HLS
+        // Check if stream is HLS (.m3u8) so ExoPlayer can instantiate the correct HLS MediaSource factory
         if (episode.mediaUrl.contains(".m3u8", ignoreCase = true) ||
             episode.mediaType.contains("mpegurl", ignoreCase = true)) {
             mediaItemBuilder.setMimeType(MimeTypes.APPLICATION_M3U8)
@@ -276,6 +289,11 @@ class PodcastDetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onStart() {
         super.onStart()
         if (player == null) {
@@ -285,7 +303,7 @@ class PodcastDetailActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Release player only on onDestroy to prevent audio from stopping during screen rotation
+        // Release player only in onDestroy (not onStop) to allow audio playback to continue during configuration changes and screen off
         player?.release()
         player = null
     }

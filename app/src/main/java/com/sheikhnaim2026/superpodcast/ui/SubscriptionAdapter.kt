@@ -23,6 +23,9 @@ class SubscriptionAdapter(
     private val onPodcastClick: (SubscribedPodcast) -> Unit
 ) : RecyclerView.Adapter<SubscriptionAdapter.SubscriptionViewHolder>() {
 
+    /**
+     * Replaces the current dataset with [newItems] and refreshes the list.
+     */
     fun updateList(newItems: List<SubscribedPodcast>) {
         this.items = newItems
         notifyDataSetChanged()

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.sheikhnaim2026.superpodcast.R
 import com.sheikhnaim2026.superpodcast.data.AppDatabase
 import com.sheikhnaim2026.superpodcast.data.SubscribedPodcast
@@ -31,8 +32,14 @@ class SubscriptionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subscriptions)
 
+        // Set up MaterialToolbar with back navigation
+        val toolbar: MaterialToolbar = findViewById(R.id.toolbarSubscriptions)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "My Subscriptions"
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
         recyclerView = findViewById(R.id.recyclerViewSubscriptions)
         layoutEmpty = findViewById(R.id.layoutEmptySubscriptions)
@@ -88,5 +95,10 @@ class SubscriptionsActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

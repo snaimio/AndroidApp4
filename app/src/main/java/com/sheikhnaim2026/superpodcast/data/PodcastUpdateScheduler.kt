@@ -38,6 +38,7 @@ object PodcastUpdateScheduler {
             .setConstraints(constraints)
             .build()
 
+        // Use ExistingPeriodicWorkPolicy.KEEP so that existing scheduled work isn't cancelled or restarted on every app launch
         workManager.enqueueUniquePeriodicWork(
             WORK_PERIODIC,
             ExistingPeriodicWorkPolicy.KEEP,
@@ -49,6 +50,7 @@ object PodcastUpdateScheduler {
             .setConstraints(constraints)
             .build()
 
+        // Use ExistingWorkPolicy.KEEP to preserve in-flight initial check without duplicate queuing
         workManager.enqueueUniqueWork(
             WORK_INITIAL,
             ExistingWorkPolicy.KEEP,

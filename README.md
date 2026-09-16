@@ -1,95 +1,67 @@
 # SuperPodcast 🎧
 
-An advanced Android podcast streaming & discovery application built with Kotlin, Room Database, Media3 ExoPlayer, WorkManager, Retrofit, Coroutines, and Glide. SuperPodcast searches the public iTunes Search API, parses RSS XML feeds, manages local subscriptions in SQLite via Room, plays audio/video/HLS streams with ExoPlayer, and detects new episode releases in the background using WorkManager.
+SuperPodcast is an Android podcast discovery and streaming application built with modern Android architecture components. It combines intelligent mood-based discovery via the Apple iTunes Search API with full RSS feed management, SQLite local subscription persistence via Room, audio/video/HLS streaming with Media3 ExoPlayer, and background update detection powered by WorkManager.
 
 ---
 
-## 📱 Features
+## 📱 Implemented Features
 
-### 1. Podcast Discovery & Mood Scoring ("MoodCast")
-- **iTunes Search Networking**: Connects to the public Apple iTunes Search API using Retrofit 2 and Kotlin Coroutines.
-- **Mood Discovery Engine**: Search podcasts by mood vibe presets (☕ *Rainy Loft*, 🔥 *High Octane*, 🕵️ *True Noir 2AM*, 🧠 *Mind Lab*, 🍿 *Pop & Banter*) or custom free-text queries.
-- **🎲 Surprise Vibe Dice Roll**: Interactive shuffle button that picks a random vibe with a smooth 360° vinyl spin animation.
-- **Client-Side Vibe Scoring**: Analyzes titles, descriptions, and artist metadata against semantic keywords to calculate a 0–100% match score.
-- **Dynamic Resonance Badges**: Visual percentage tags highlight how closely a podcast aligns with the selected vibe.
+### Search & Discovery
+- **iTunes Search API Integration**: Searches iTunes podcast catalog with Retrofit and Kotlin Coroutines.
+- **Mood Scoring & Ranking**: Evaluates show titles, artist information, and episode descriptions against curated semantic keywords to rank podcasts by vibe percentage (0–100%).
+- **Interactive Mood Chips**: Quick-tap choice chips for instant vibes (☕ *Rainy Loft*, 🔥 *High Octane*, 🕵️ *True Noir 2AM*, 🧠 *Mind Lab*, 🍿 *Pop & Banter*).
+- **Surprise Vibe Dice Roll**: Generates randomized mood queries with an interactive vinyl record animation.
 
-### 2. RSS XML Feed Parsing & Episode Management
-- **Namespaced XML Pull Parsing**: Custom [PodcastRssParser] supporting plain RSS and namespaced tags (`<content:encoded>`, `<media:content>`, `<enclosure>`).
-- **Media Type Detection**: Automatically classifies streams as Audio, Video, or mixed Audio / Video.
-- **Episode List**: Displays full episode catalogs with publication dates, audio/video badges, and clean HTML show notes.
+### RSS & Episode Management
+- **Namespaced XML Pull Parser**: Custom XML parser supporting standard RSS tags (`<title>`, `<guid>`, `<pubDate>`, `<enclosure>`) and namespaced extensions (`<content:encoded>`, `<media:content>`).
+- **Media Type Detection**: Detects and categorizes streams as Audio or Video using MIME types and file extensions.
+- **Rich Episode Catalog**: Displays scrollable episode lists with formatted release dates, media type badges, and cleaned HTML show notes.
 
-### 3. Media Streaming with ExoPlayer (Media3)
-- **Audio, Video & HLS**: Full hardware-accelerated playback of MP3, MP4, and `.m3u8` HTTP Live Streaming (HLS) feeds.
-- **Integrated Player Controls**: Embedded `androidx.media3.ui.PlayerView` with playback controls, buffering states, and aspect ratio fitting.
-- **Lifecycle Resilient**: Player persists during screen rotation and pauses/releases cleanly.
+### Playback
+- **Media3 ExoPlayer Streaming**: Embedded media player supporting high-performance audio and video playback.
+- **Adaptive HLS Support**: Seamlessly streams HTTP Live Streaming (`.m3u8` / `application/x-mpegURL`) feeds.
+- **Lifecycle Preservation**: Audio streaming survives orientation and configuration changes, releasing hardware resources in `onDestroy()`.
 
-### 4. Local Subscriptions with Room Database
-- **SQLite Persistence**: Local `@Entity` and `@Dao` storing subscribed podcasts with iTunes track ID, title, artist, artwork, and RSS feed URL.
-- **Reactive UI**: Subscriptions library observes Room via Kotlin Coroutines `Flow`, updating the list in real-time.
-- **One-Tap Toggle**: Subscribe / unsubscribe button in the detail view immediately synchronizes with the database.
+### Subscriptions
+- **Room Database Persistence**: Stores subscribed podcasts in a local SQLite database with unique iTunes track IDs.
+- **Reactive UI Flow**: Observes database changes in real-time via Kotlin Coroutines `Flow`.
+- **Subscriptions Library**: Dedicated screen displaying all subscribed podcasts sorted alphabetically (A–Z) with direct click-to-detail navigation.
+- **Subscribe / Unsubscribe Toggle**: One-tap toggle button on the detail view that instantly syncs database state.
 
-### 5. Background Updates & Notifications
-- **WorkManager Scheduling**: Enqueues periodic (15-minute) and one-time background workers with active network constraints.
-- **New-Episode Detection**: Compares latest episode GUIDs against `SharedPreferences` to detect newly published releases.
+### Notifications
+- **Notification Channel (API 26+)**: Configures dedicated "Podcast Updates" channel with default priority.
+- **Runtime Permission Handling (API 33+)**: Prompts for `POST_NOTIFICATIONS` runtime permission on Android 13+.
 - **Dual Notification Strategy**:
-  - **Foreground Alert**: Displays in-app Toast notifications via an unexported `BroadcastReceiver` when the app is active.
-  - **Background Push Notification**: Posts system notification channel alerts on Android O+ with `BigTextStyle` expanders and click-to-detail navigation.
+  - **Foreground Banner**: Unexported in-app `BroadcastReceiver` triggers Toast notifications when the app is active.
+  - **Background Push**: Dispatches system tray notifications with `BigTextStyle` expanders and PendingIntent navigation when closed or backgrounded.
+
+### Background Work
+- **WorkManager Periodic & One-Time Tasks**: Enqueues 15-minute periodic update checks and immediate one-time sync with network connectivity constraints.
+- **GUID Tracking with SharedPreferences**: Tracks the latest episode GUID per subscribed podcast to detect newly published episodes without duplicate alerts on initial subscription.
 
 ---
 
-## 🛠️ Architecture & Tech Stack
+## 🛠️ Built With
 
-- **Language**: Kotlin
-- **Database**: AndroidX Room 2.6.1 (with KSP annotation processing)
-- **Media Playback**: AndroidX Media3 ExoPlayer 1.4.1 (ExoPlayer, HLS, UI)
-- **Background Work**: AndroidX WorkManager 2.9.1 (`CoroutineWorker`)
-- **Networking**: Retrofit 2.11.0 + Gson Converter
-- **Image Loading**: Glide 4.16.0
-- **Asynchronous Execution**: Kotlin Coroutines (`Dispatchers.IO`, `Dispatchers.Default`, `lifecycleScope`, `Flow`)
-- **UI & Layouts**: ConstraintLayout, MaterialCardView, Material Chips, NestedScrollView, PlayerView, RecyclerView
-
----
-
-## 📂 Project Structure
-
-```
-com.sheikhnaim2026.superpodcast/
-├── data/
-│   ├── AppDatabase.kt               # Room database singleton
-│   ├── Episode.kt                   # Parsed RSS episode data model
-│   ├── ITunesApi.kt                 # Retrofit Search API interface
-│   ├── Mood.kt                      # Mood category model
-│   ├── MoodCatalog.kt               # Predefined mood presets & dice generator
-│   ├── NotificationHelper.kt        # Notification channels & push builder
-│   ├── PodcastResponse.kt           # Gson models for iTunes API
-│   ├── PodcastRssParser.kt          # XMLPullParser with namespace support
-│   ├── PodcastUpdateScheduler.kt    # WorkManager periodic scheduler
-│   ├── PodcastUpdateWorker.kt       # CoroutineWorker for update detection
-│   ├── ScoredPodcast.kt             # Model pairing Podcast with match score
-│   ├── SubscribedPodcast.kt         # Room @Entity for subscriptions
-│   └── SubscriptionDao.kt           # Room @Dao for database queries
-├── logic/
-│   └── MoodScorer.kt                # Keyword density scoring & ranking engine
-└── ui/
-    ├── EpisodeAdapter.kt            # RecyclerView adapter for episodes
-    ├── MainActivity.kt              # Main discovery, search, & notifications
-    ├── PodcastAdapter.kt            # RecyclerView adapter for search results
-    ├── PodcastDetailActivity.kt     # Detail view with ExoPlayer & subscribe toggle
-    ├── SubscriptionAdapter.kt       # RecyclerView adapter for subscriptions
-    └── SubscriptionsActivity.kt     # Subscriptions library screen
-```
+- **Kotlin**: Core language
+- **Room**: Local database persistence (SQLite) with KSP annotation processing
+- **WorkManager**: Background periodic & one-time tasks
+- **Media3 ExoPlayer**: Audio, video, and HLS media streaming
+- **Retrofit**: Network REST client for iTunes Search API
+- **Glide**: Image loading and caching for podcast cover art
+- **Material Components**: Modern dark-theme UI components, cards, chips, and toolbars
 
 ---
 
-## 🚀 Getting Started
+## 🚀 How to Run
 
-1. Clone this repository:
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/snaimio/AndroidApp4.git
    ```
-2. Open the project in **Android Studio**.
-3. Allow Gradle to sync dependencies.
-4. Run on an Android Emulator or physical device (`API 24+` / Android 7.0+).
+2. **Open in Android Studio**: Open Android Studio and select **File > Open**, then choose the cloned `AndroidApp4` directory.
+3. **Sync Gradle**: Allow Android Studio to sync Gradle dependencies and build the project index.
+4. **Run**: Select an emulator or connected physical device running **Android 13+ (API 33+)** (or any device running API 24+) and click **Run 'app'** (`Shift + F10`).
 
 ---
 

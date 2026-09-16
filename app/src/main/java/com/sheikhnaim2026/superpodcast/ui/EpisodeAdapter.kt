@@ -24,6 +24,9 @@ class EpisodeAdapter(
     private val onEpisodeClick: (Episode) -> Unit
 ) : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
 
+    /**
+     * Replaces the current dataset with [newEpisodes] and refreshes the list.
+     */
     fun updateList(newEpisodes: List<Episode>) {
         this.episodes = newEpisodes
         notifyDataSetChanged()

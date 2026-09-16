@@ -10,4 +10,33 @@
     <string name="empty_title_not_found">No matches found</string>
     <string name="empty_title_error">Connection Error</string>
     <string name="empty_subtitle_error">Unable to reach iTunes catalog.\nPlease check your internet connection.</string>
+
+    <!-- Detail Screen Strings -->
+    <string name="btn_subscribe">SUBSCRIBE</string>
+    <string name="btn_subscribed">SUBSCRIBED</string>
+    <string name="header_show_notes">SHOW NOTES</string>
+    <string name="header_available_episodes">AVAILABLE EPISODES</string>
+    <string name="error_no_feed">No feed URL available for this podcast</string>
+    <string name="error_feed_load_failed">Failed to load RSS feed</string>
+
+    <!-- Subscriptions Screen Strings -->
+    <string name="header_my_subscriptions">MY SUBSCRIPTIONS</string>
+    <string name="empty_subscriptions_title">No subscriptions yet</string>
+    <string name="empty_subscriptions_subtitle">Search for podcasts and tap SUBSCRIBE\nto receive episode updates.</string>
+    <string name="badge_subscribed">★ Subscribed</string>
+
+    <!-- Episode & Media Strings -->
+    <string name="type_audio">AUDIO</string>
+    <string name="type_video">VIDEO</string>
+
+    <!-- Accessibility / Content Descriptions -->
+    <string name="desc_open_subscriptions">Open Subscriptions</string>
+    <string name="desc_roll_dice">Roll surprise mood</string>
+    <string name="desc_play_episode">Play Episode</string>
+
+    <!-- Notifications & Background Updates -->
+    <string name="notification_channel_name">Podcast Episode Updates</string>
+    <string name="notification_channel_desc">Notifications when subscribed podcasts publish new episodes</string>
+    <string name="msg_new_episode">New episode available!</string>
+    <string name="action_view">VIEW</string>
 </resources>

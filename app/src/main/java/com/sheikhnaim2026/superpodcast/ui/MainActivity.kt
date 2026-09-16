@@ -200,7 +200,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         isInForeground = true
-        // Register in-app broadcast receiver for new episode alerts
+        // Register in-app broadcast receiver for new episode alerts using RECEIVER_NOT_EXPORTED
+        // This ensures the broadcast receiver only accepts internal broadcasts originating from our own app package
         val filter = IntentFilter(PodcastUpdateWorker.ACTION_NEW_EPISODE)
         ContextCompat.registerReceiver(
             this,
@@ -244,6 +245,12 @@ class MainActivity : AppCompatActivity() {
         bindChip(R.id.chipComedy, "comedy")
     }
 
+    /**
+     * Binds a click listener to a Chip view that triggers mood-based search when tapped.
+     *
+     * @param chipId Layout ID of the Chip view.
+     * @param moodId Identifier key for the [Mood] in [MoodCatalog].
+     */
     private fun bindChip(chipId: Int, moodId: String) {
         findViewById<Chip>(chipId)?.setOnClickListener {
             val mood = MoodCatalog.findByLabelOrId(moodId)
